@@ -1,6 +1,6 @@
 {
   "name": "@tscircuit/ngspice-spice-engine",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "A tscircuit-compatible SPICE engine using ngspice.",
   "type": "module",
   "main": "./dist/index.js",
