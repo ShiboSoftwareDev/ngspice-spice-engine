@@ -19,18 +19,11 @@ export interface PspiceFixtureRun {
   } | null
 }
 
-export const runPspiceFixture = (
-  fixtureName: string,
-  options?: { withoutPspiceCompat?: boolean },
-): PspiceFixtureRun => {
+export const runPspiceFixture = (fixtureName: string): PspiceFixtureRun => {
   const args = [
     join(import.meta.dir, "run-pspice-fixture.ts"),
     join(import.meta.dir, "../fixtures/pspice", fixtureName),
   ]
-
-  if (options?.withoutPspiceCompat) {
-    args.push("--without-pspice-compat")
-  }
 
   const result = spawnSync(process.execPath, args, {
     cwd: join(import.meta.dir, "../.."),
@@ -50,11 +43,8 @@ export const runPspiceFixture = (
   }
 }
 
-export const expectPspiceFixtureToRun = (
-  fixtureName: string,
-  options?: { withoutPspiceCompat?: boolean },
-) => {
-  const run = runPspiceFixture(fixtureName, options)
+export const expectPspiceFixtureToRun = (fixtureName: string) => {
+  const run = runPspiceFixture(fixtureName)
 
   expect(run.status).toBe(0)
   expect(run.output).not.toBeNull()
@@ -64,11 +54,8 @@ export const expectPspiceFixtureToRun = (
   return run.output!
 }
 
-export const expectPspiceFixtureToReportError = (
-  fixtureName: string,
-  options?: { withoutPspiceCompat?: boolean },
-) => {
-  const run = runPspiceFixture(fixtureName, options)
+export const expectPspiceFixtureToReportError = (fixtureName: string) => {
+  const run = runPspiceFixture(fixtureName)
 
   expect(run.status).toBe(0)
   expect(run.output).not.toBeNull()
